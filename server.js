@@ -18,12 +18,12 @@ function respondTwilio(req, res, next)
     res.status(200).send('<Response></Response>');
 }
 
-app.post('/sms', function (req, res)
+app.post('/sms', (req, res) =>
 {
-    sms.receive(req.body).then(function (res)
+    sms.receive(req.body).then(res =>
     {
         if (res) return intercom.send(res);
-    }).catch(function (err)
+    }).catch(err =>
     {
         console.error('SMS error: ' + JSON.stringify(err));
     });
@@ -31,12 +31,12 @@ app.post('/sms', function (req, res)
     respondTwilio(req, res);
 });
 
-app.post('/intercom', function (req, res)
+app.post('/intercom', (req, res) =>
 {
-    intercom.receive(req.body).then(function (res)
+    intercom.receive(req.body).then(res =>
     {
         if (res) return sms.send(res);
-    }).catch(function (err)
+    }).catch(err =>
     {
         console.error('Intercom error: ' + JSON.stringify(err));
     });
